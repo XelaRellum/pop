@@ -49,7 +49,12 @@ func init() {
 	dialect := os.Getenv("SODA_DIALECT")
 
 	var err error
-	PDB, err = pop.Connect(dialect)
+	connections, err := pop.LoadConfig()
+	if err != nil {
+		log.Panic(err)
+	}
+
+	PDB, err = pop.Connect(dialect, connections)
 	if err != nil {
 		log.Panic(err)
 	}
